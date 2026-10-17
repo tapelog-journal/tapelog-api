@@ -1,0 +1,10 @@
+# Cloudflare Workers config. Not deployed yet.
+name = "tapelog-api"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+compatibility_flags = ["nodejs_compat"]   # @x402/hono uses Buffer
+
+[vars]
+NETWORK = "eip155:84532"                  # Base Sepolia testnet only; the code refuses anything else
+FACILITATOR_URL = "https://x402.org/facilitator"
+# PAY_TO is set with: npx wrangler secret put PAY_TO   (or in .dev.vars for local dev)

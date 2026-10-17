@@ -1,0 +1,3 @@
+# Copy to .dev.vars for `npm run dev`. .dev.vars is git-ignored.
+# PLACEHOLDER ONLY: the all-zero address is rejected by the app. Replace it with a Base Sepolia (testnet) receiving address.
+PAY_TO=0x0000000000000000000000000000000000000000

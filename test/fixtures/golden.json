@@ -1,0 +1,145 @@
+{
+ "das": {
+  "markdown": "# TapeLog weekly habit report\n\n**Week of 2026-10-12** (data through 2026-10-15), compared with 0 prior week(s).\n\nThis week: 5 closed trades, net $402.50.\n\n## Habits that appeared\n\nNone this week.\n\n## Habits that faded\n\nNone this week.\n\n## About the same\n\nNothing else to note.\n\n## Week by week\n\n| Week of | Trades | Size-up after loss | Losers held longer | Overtrading bursts | Time-of-day slump |\n|---|---|---|---|---|---|\n| 2026-10-12 (this week) | 5 | 0 | 0 | 0 | 0 |\n\n_Counts of your own past behavior only. Small samples can be noise. Use them as prompts for reflection, not as trading signals._\n\n**Educational, not investment advice.** TapeLog is an educational, record-keeping tool. It describes your own past trades only. It is not investment advice, and TapeLog is not a registered investment adviser or broker-dealer. Nothing here is a recommendation to buy, sell or hold any security.\n",
+  "report": {
+   "appeared": [],
+   "as_of": "2026-10-15",
+   "disclaimer": "TapeLog is an educational, record-keeping tool. It describes your own past trades only. It is not investment advice, and TapeLog is not a registered investment adviser or broker-dealer. Nothing here is a recommendation to buy, sell or hold any security.",
+   "faded": [],
+   "framing": "Counts of your own past behavior only. Small samples can be noise. Use them as prompts for reflection, not as trading signals.",
+   "prior_weeks": {},
+   "prior_weeks_compared": 0,
+   "steady": [],
+   "this_week": {
+    "losers_held_longer": 0,
+    "net_pnl": 402.5,
+    "overtrading_burst": 0,
+    "size_up_after_loss": 0,
+    "slump_window": null,
+    "time_of_day_slump": 0,
+    "trades": 5
+   },
+   "week_of": "2026-10-12"
+  },
+  "trips": 5
+ },
+ "robinhood": {
+  "markdown": "# TapeLog weekly habit report\n\n**Week of 2026-10-12** (data through 2026-10-15), compared with 0 prior week(s).\n\nThis week: 4 closed trades, net $312.40.\n\n## Habits that appeared\n\n- Overtrading bursts: this showed up 1 time this week (3+ trades opened within 15 minutes).\n\n## Habits that faded\n\nNone this week.\n\n## About the same\n\nNothing else to note.\n\n## Week by week\n\n| Week of | Trades | Size-up after loss | Losers held longer | Overtrading bursts | Time-of-day slump |\n|---|---|---|---|---|---|\n| 2026-10-12 (this week) | 4 | 0 | 0 | 1 | 0 |\n\n_Counts of your own past behavior only. Small samples can be noise. Use them as prompts for reflection, not as trading signals._\n\n**Educational, not investment advice.** TapeLog is an educational, record-keeping tool. It describes your own past trades only. It is not investment advice, and TapeLog is not a registered investment adviser or broker-dealer. Nothing here is a recommendation to buy, sell or hold any security.\n",
+  "report": {
+   "appeared": [
+    {
+     "detail": "3+ trades opened within 15 minutes",
+     "habit": "overtrading_burst",
+     "label": "Overtrading bursts",
+     "prior_weekly_avg": 0.0,
+     "summary": "Overtrading bursts: this showed up 1 time this week (3+ trades opened within 15 minutes).",
+     "this_week": 1
+    }
+   ],
+   "as_of": "2026-10-15",
+   "disclaimer": "TapeLog is an educational, record-keeping tool. It describes your own past trades only. It is not investment advice, and TapeLog is not a registered investment adviser or broker-dealer. Nothing here is a recommendation to buy, sell or hold any security.",
+   "faded": [],
+   "framing": "Counts of your own past behavior only. Small samples can be noise. Use them as prompts for reflection, not as trading signals.",
+   "prior_weeks": {},
+   "prior_weeks_compared": 0,
+   "steady": [],
+   "this_week": {
+    "losers_held_longer": 0,
+    "net_pnl": 312.4,
+    "overtrading_burst": 1,
+    "size_up_after_loss": 0,
+    "slump_window": null,
+    "time_of_day_slump": 0,
+    "trades": 4
+   },
+   "week_of": "2026-10-12"
+  },
+  "trips": 4
+ },
+ "weekly": {
+  "markdown": "# TapeLog weekly habit report\n\n**Week of 2026-10-12** (data through 2026-10-15), compared with 3 prior week(s).\n\nThis week: 24 closed trades, net $-287.00.\n\n## Habits that appeared\n\n- Size-up after a loss: this showed up 8 times this week vs 0 per week before (next trade after a same-day loss was over 1.2x the usual position size).\n- Losers held longer than winners: this showed up 9 times this week vs 0 per week before (losing trade held longer than the average winning trade).\n\n## Habits that faded\n\n- Overtrading bursts: showed up 0 times this week vs 1.3 per week before.\n- Time-of-day slump: showed up 3 times this week vs 6.3 per week before.\n\n## About the same\n\nNothing else to note.\n\n## Week by week\n\n| Week of | Trades | Size-up after loss | Losers held longer | Overtrading bursts | Time-of-day slump |\n|---|---|---|---|---|---|\n| 2026-09-21 | 26 | 0 | 0 | 2 | 7 |\n| 2026-09-28 | 26 | 0 | 0 | 2 | 8 |\n| 2026-10-05 | 20 | 0 | 0 | 0 | 4 |\n| 2026-10-12 (this week) | 24 | 8 | 9 | 0 | 3 |\n\n_Counts of your own past behavior only. Small samples can be noise. Use them as prompts for reflection, not as trading signals._\n\n**Educational, not investment advice.** TapeLog is an educational, record-keeping tool. It describes your own past trades only. It is not investment advice, and TapeLog is not a registered investment adviser or broker-dealer. Nothing here is a recommendation to buy, sell or hold any security.\n",
+  "report": {
+   "appeared": [
+    {
+     "detail": "next trade after a same-day loss was over 1.2x the usual position size",
+     "habit": "size_up_after_loss",
+     "label": "Size-up after a loss",
+     "prior_weekly_avg": 0,
+     "summary": "Size-up after a loss: this showed up 8 times this week vs 0 per week before (next trade after a same-day loss was over 1.2x the usual position size).",
+     "this_week": 8
+    },
+    {
+     "detail": "losing trade held longer than the average winning trade",
+     "habit": "losers_held_longer",
+     "label": "Losers held longer than winners",
+     "prior_weekly_avg": 0,
+     "summary": "Losers held longer than winners: this showed up 9 times this week vs 0 per week before (losing trade held longer than the average winning trade).",
+     "this_week": 9
+    }
+   ],
+   "as_of": "2026-10-15",
+   "disclaimer": "TapeLog is an educational, record-keeping tool. It describes your own past trades only. It is not investment advice, and TapeLog is not a registered investment adviser or broker-dealer. Nothing here is a recommendation to buy, sell or hold any security.",
+   "faded": [
+    {
+     "detail": "3+ trades opened within 15 minutes",
+     "habit": "overtrading_burst",
+     "label": "Overtrading bursts",
+     "prior_weekly_avg": 1.3,
+     "summary": "Overtrading bursts: showed up 0 times this week vs 1.3 per week before.",
+     "this_week": 0
+    },
+    {
+     "detail": "losing trades in the weakest entry window (after-hours)",
+     "habit": "time_of_day_slump",
+     "label": "Time-of-day slump",
+     "prior_weekly_avg": 6.3,
+     "summary": "Time-of-day slump: showed up 3 times this week vs 6.3 per week before.",
+     "this_week": 3
+    }
+   ],
+   "framing": "Counts of your own past behavior only. Small samples can be noise. Use them as prompts for reflection, not as trading signals.",
+   "prior_weeks": {
+    "2026-09-21": {
+     "losers_held_longer": 0,
+     "net_pnl": 101.0,
+     "overtrading_burst": 2,
+     "size_up_after_loss": 0,
+     "slump_window": "11:00-12:00",
+     "time_of_day_slump": 7,
+     "trades": 26
+    },
+    "2026-09-28": {
+     "losers_held_longer": 0,
+     "net_pnl": 145.0,
+     "overtrading_burst": 2,
+     "size_up_after_loss": 0,
+     "slump_window": "11:00-12:00",
+     "time_of_day_slump": 8,
+     "trades": 26
+    },
+    "2026-10-05": {
+     "losers_held_longer": 0,
+     "net_pnl": 128.0,
+     "overtrading_burst": 0,
+     "size_up_after_loss": 0,
+     "slump_window": "09:30-10:00",
+     "time_of_day_slump": 4,
+     "trades": 20
+    }
+   },
+   "prior_weeks_compared": 3,
+   "steady": [],
+   "this_week": {
+    "losers_held_longer": 9,
+    "net_pnl": -287.0,
+    "overtrading_burst": 0,
+    "size_up_after_loss": 8,
+    "slump_window": "after-hours",
+    "time_of_day_slump": 3,
+    "trades": 24
+   },
+   "week_of": "2026-10-12"
+  },
+  "trips": 96
+ }
+}
