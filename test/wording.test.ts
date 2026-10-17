@@ -37,6 +37,11 @@ describe("no investment-advice wording", () => {
     for (const s of allStrings(body)) expect(strip(s)).not.toMatch(BANNED);
   });
 
+  it("the Bazaar discovery metadata contains no advice phrases", async () => {
+    const { DISCOVERY, DISCOVERY_DESCRIPTION } = await import("../src/app");
+    for (const s of [...allStrings(DISCOVERY), DISCOVERY_DESCRIPTION]) expect(strip(s)).not.toMatch(BANNED);
+  });
+
   it("source strings shown to users contain no advice phrases", () => {
     const dir = new URL("../src/", import.meta.url);
     for (const f of readdirSync(dir).filter(f => f !== "disclaimer.ts")) { // disclaimer.ts is the disclaimer itself

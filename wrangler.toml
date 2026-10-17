@@ -1,10 +1,11 @@
-# Cloudflare Workers config. Not deployed yet.
+# Cloudflare Workers config. Live at https://tapelog-api.tapelog.workers.dev
 name = "tapelog-api"
 main = "src/index.ts"
 compatibility_date = "2026-05-01"
 compatibility_flags = ["nodejs_compat"]   # @x402/hono uses Buffer
 
 [vars]
-NETWORK = "eip155:84532"                  # Base Sepolia testnet only; the code refuses anything else
-FACILITATOR_URL = "https://x402.org/facilitator"
-# PAY_TO is set with: npx wrangler secret put PAY_TO   (or in .dev.vars for local dev)
+# Base mainnet, real USDC. The code allows only eip155:8453 (Base) or eip155:84532 (Base Sepolia) and refuses anything else.
+NETWORK = "eip155:8453"
+FACILITATOR_URL = "https://facilitator.payai.network"   # PayAI, no API key; supports the bazaar discovery extension
+# PAY_TO is a Worker secret: npx wrangler secret put PAY_TO   (or in .dev.vars for local dev)

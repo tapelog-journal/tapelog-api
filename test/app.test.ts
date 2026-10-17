@@ -10,7 +10,9 @@ import { verifyTypedData } from "viem";
 import { x402Client, x402HTTPClient } from "@x402/core/client";
 import { registerExactEvmScheme } from "@x402/evm/exact/client";
 import type { FacilitatorClient } from "@x402/core/server";
-import { createApp, TESTNET, ConfigError, validateConfig } from "../src/app";
+import { createApp, TESTNET, MAINNET, NETWORKS, PAYAI_FACILITATOR, DEFAULT_FACILITATOR, DISCOVERY, ConfigError, validateConfig } from "../src/app";
+import { DEFAULT_ASSETS } from "@x402/evm";
+import { validateDiscoveryExtension } from "@x402/extensions/bazaar";
 import { SHORT_DISCLAIMER, DISCLAIMER } from "../src/disclaimer";
 
 const fx = (f: string) => readFileSync(new URL(`./fixtures/${f}`, import.meta.url), "utf8");
@@ -21,7 +23,8 @@ const buyer = privateKeyToAccount(generatePrivateKey());
 
 class MockFacilitator implements FacilitatorClient {
   calls = { verify: 0, settle: 0 };
-  async getSupported() { return { kinds: [{ x402Version: 2, scheme: "exact", network: TESTNET }], extensions: [], signers: {} } as any; }
+  constructor(private readonly network: string = TESTNET) {}
+  async getSupported() { return { kinds: [{ x402Version: 2, scheme: "exact", network: this.network }], extensions: ["bazaar"], signers: {} } as any; }
   async verify(p: any, req: any) {
     this.calls.verify++;
     const a = p.payload.authorization;
@@ -157,11 +160,65 @@ describe("POST /habit-report paywall", () => {
   });
 });
 
+describe("Base mainnet config", () => {
+  const BASE_USDC = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
+  it("pinned USDC addresses match @x402/evm's default assets for both networks", () => {
+    expect(NETWORKS[MAINNET].usdc.toLowerCase()).toBe(BASE_USDC);
+    expect((DEFAULT_ASSETS as any)[MAINNET][0].asset.toLowerCase()).toBe(BASE_USDC);
+    expect((DEFAULT_ASSETS as any)[TESTNET][0].asset.toLowerCase()).toBe(NETWORKS[TESTNET].usdc.toLowerCase());
+  });
+  it("defaults to the PayAI facilitator on Base mainnet", () => {
+    expect(validateConfig({ payTo: SELLER, network: MAINNET })).toEqual({ payTo: SELLER, network: MAINNET, facilitatorUrl: PAYAI_FACILITATOR });
+    expect(validateConfig({ payTo: SELLER, network: TESTNET }).facilitatorUrl).toBe(DEFAULT_FACILITATOR);
+  });
+  it("GET / reports Base mainnet, the USDC address and the disclaimer", async () => {
+    const a = createApp({ payTo: SELLER, network: MAINNET, facilitator: new MockFacilitator(MAINNET) });
+    const b: any = await (await a.request("/")).json();
+    expect(b).toMatchObject({ network: MAINNET, network_name: "Base (mainnet)", testnet: false, price: "$0.10", facilitator: PAYAI_FACILITATOR, configured: true, disclaimer: DISCLAIMER, short_disclaimer: SHORT_DISCLAIMER });
+    expect(b.asset_address.toLowerCase()).toBe(BASE_USDC);
+  });
+  it("402 asks for 100000 units of Base USDC on eip155:8453 to PAY_TO, with bazaar discovery metadata", async () => {
+    const f = new MockFacilitator(MAINNET);
+    const a = createApp({ payTo: SELLER, network: MAINNET, facilitator: f });
+    const r = await a.request("/habit-report", { method: "POST", body: CSV, headers: { "content-type": "text/csv" } });
+    expect(r.status).toBe(402);
+    expect(header(r, "x-tapelog-disclaimer")).toBe(SHORT_DISCLAIMER);
+    const body: any = await r.json();
+    expect(body).toMatchObject({ network: MAINNET, short_disclaimer: SHORT_DISCLAIMER });
+    const pr = payer().getPaymentRequiredResponse(n => r.headers.get(n), body);
+    expect(pr.accepts).toHaveLength(1);
+    expect(pr.accepts[0]).toMatchObject({ scheme: "exact", network: MAINNET, amount: "100000", payTo: SELLER, extra: { name: "USD Coin", version: "2" } });
+    expect(pr.accepts[0].asset.toLowerCase()).toBe(BASE_USDC);
+    expect(pr.resource.description).toContain("behavior-only trade habit report");
+    expect(pr.resource.description).toContain(SHORT_DISCLAIMER);
+    const bz: any = (pr as any).extensions?.bazaar;
+    expect(bz?.info.input).toMatchObject({ type: "http", method: "POST", bodyType: "text" });
+    expect(validateDiscoveryExtension(bz).valid).toBe(true);
+    expect(f.calls).toEqual({ verify: 0, settle: 0 });
+  });
+  it("declared discovery extension is valid once the server adds the method (POST)", () => {
+    const d: any = structuredClone((DISCOVERY as any).bazaar);
+    d.info.input.method = "POST";
+    expect(validateDiscoveryExtension(d)).toMatchObject({ valid: true });
+  });
+});
+
 describe("configuration guardrails", () => {
-  it("refuses mainnet and any non-testnet network", () => {
-    expect(() => validateConfig({ payTo: SELLER, network: "eip155:8453" })).toThrow(ConfigError);
-    expect(() => validateConfig({ payTo: SELLER, network: "solana:mainnet" })).toThrow(ConfigError);
+  it("allows only Base and Base Sepolia; default is Base Sepolia", () => {
+    for (const n of ["eip155:1", "eip155:10", "eip155:137", "eip155:43114", "solana:mainnet", "base", "eip155:84531"])
+      expect(() => validateConfig({ payTo: SELLER, network: n }), n).toThrow(ConfigError);
     expect(validateConfig({ payTo: SELLER }).network).toBe("eip155:84532");
+    expect(validateConfig({ payTo: SELLER, network: MAINNET }).network).toBe("eip155:8453");
+  });
+  it("refuses the testnet-only x402.org facilitator on mainnet and non-https facilitators", () => {
+    expect(() => validateConfig({ payTo: SELLER, network: MAINNET, facilitatorUrl: DEFAULT_FACILITATOR })).toThrow(ConfigError);
+    expect(() => validateConfig({ payTo: SELLER, network: MAINNET, facilitatorUrl: "http://facilitator.payai.network" })).toThrow(ConfigError);
+  });
+  it("an unsupported NETWORK disables the paid route (503) instead of charging elsewhere", async () => {
+    const a = createApp({ payTo: SELLER, network: "eip155:1", facilitator: new MockFacilitator("eip155:1") });
+    const r = await a.request("/habit-report", { method: "POST", body: CSV });
+    expect(r.status).toBe(503);
+    expect(((await a.request("/")).headers.get("x-tapelog-disclaimer"))).toBe(SHORT_DISCLAIMER);
   });
   it("rejects missing, malformed and all-zero placeholder PAY_TO; paid route answers 503", async () => {
     for (const payTo of ["", "0x123", "0x0000000000000000000000000000000000000000"]) {

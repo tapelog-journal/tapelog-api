@@ -1,3 +1,6 @@
 # Copy to .dev.vars for `npm run dev`. .dev.vars is git-ignored.
-# PLACEHOLDER ONLY: the all-zero address is rejected by the app. Replace it with a Base Sepolia (testnet) receiving address.
+# PLACEHOLDER ONLY: the all-zero address is rejected by the app. Replace it with your receiving address.
 PAY_TO=0x0000000000000000000000000000000000000000
+# Local dev should stay on Base Sepolia testnet:
+NETWORK=eip155:84532
+FACILITATOR_URL=https://x402.org/facilitator
